@@ -31,6 +31,8 @@ cv2.waitKey(0)
 print(img_gray.shape) 
 #shape gives the dimension of image.
 #since gray scale image has only one channel, the shape is (600, 600) instead of (600, 600, 3) for color image.
+#The shape of the image is represented as (height, width, channels) for color images and (height, width) for gray scale images.
+#As size of img is defined as (600, 600) hence shape gives out the dimensions of the image as (600, 600) for gray scale image.
 
 #RGB Color channels
 img[:, :, 0] = 0 # Blue channel
