@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RRL — Complete Study Guide (Dark)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:        #0f1117;
+  --surface:   #161b27;
+  --surface2:  #1e2535;
+  --surface3:  #252d3d;
+  --border:    #2a3347;
+  --border2:   #3a4560;
+
+  --blue:      #4d9ef7;
+  --blue-dim:  #1a2e4a;
+  --green:     #3ecf8e;
+  --green-dim: #0d2e1e;
+  --yellow:    #f5c842;
+  --yellow-dim:#2a220a;
+  --red:       #f66;
+  --red-dim:   #2e1010;
+  --purple:    #a78bfa;
+  --purple-dim:#1e1535;
+  --teal:      #2dd4bf;
+  --teal-dim:  #0b2520;
+  --orange:    #fb923c;
+  --orange-dim:#2a1508;
+
+  --text:      #e2e8f0;
+  --text-mid:  #94a3b8;
+  --text-dim:  #64748b;
+
+  --shadow:    0 4px 20px rgba(0,0,0,0.4);
+  --code-bg:   #090d14;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* ======== HERO ======== */
+.hero {
+  background: linear-gradient(135deg, #0a0f1e 0%, #111827 40%, #0e1a2e 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 52px 32px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  top: -200px; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(77,158,247,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-kicker {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 12px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.hero h1 { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+.hero h1 span { color: var(--blue); }
+.hero p { color: var(--text-mid); font-size: 15px; max-width: 560px; margin: 0 auto 20px; }
+.hero-pills { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+.pill {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 12px;
+  color: var(--text-mid);
+}
+
+/* ======== NAV ======== */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav-inner { display:flex; width:max-content; padding: 0 20px; }
+.nav-inner a {
+  display: block;
+  padding: 13px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.nav-inner a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+
+/* ======== LAYOUT ======== */
+.container { max-width: 880px; margin: 0 auto; padding: 40px 22px 80px; }
+section { margin-bottom: 64px; }
+
+/* ======== CHAPTER HEADER ======== */
+.ch {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.ch-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.ci-blue   { background: var(--blue-dim);   border: 1px solid rgba(77,158,247,0.3); }
+.ci-green  { background: var(--green-dim);  border: 1px solid rgba(62,207,142,0.3); }
+.ci-yellow { background: var(--yellow-dim); border: 1px solid rgba(245,200,66,0.3); }
+.ci-purple { background: var(--purple-dim); border: 1px solid rgba(167,139,250,0.3); }
+.ci-teal   { background: var(--teal-dim);   border: 1px solid rgba(45,212,191,0.3); }
+.ci-orange { background: var(--orange-dim); border: 1px solid rgba(251,146,60,0.3); }
+.ci-red    { background: var(--red-dim);    border: 1px solid rgba(255,102,102,0.3); }
+.ch-meta h2 { font-size: 20px; font-weight: 700; color: #fff; }
+.ch-meta p  { font-size: 13px; color: var(--text-dim); }
+
+/* ======== CARDS ======== */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 16px;
+}
+.card-blue   { border-left: 4px solid var(--blue);   }
+.card-green  { border-left: 4px solid var(--green);  }
+.card-yellow { border-left: 4px solid var(--yellow); }
+.card-purple { border-left: 4px solid var(--purple); }
+.card-teal   { border-left: 4px solid var(--teal);   }
+.card-orange { border-left: 4px solid var(--orange); }
+.card-red    { border-left: 4px solid var(--red);    }
+
+/* ======== CALLOUTS ======== */
+.callout {
+  border-radius: 10px; padding: 14px 18px;
+  margin: 14px 0; font-size: 14px;
+}
+.callout strong {
+  display: block; font-size: 11px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.c-tip     { background: var(--teal-dim);   border-left: 3px solid var(--teal);   }
+.c-tip     strong { color: var(--teal); }
+.c-note    { background: var(--purple-dim); border-left: 3px solid var(--purple); }
+.c-note    strong { color: var(--purple); }
+.c-warn    { background: var(--yellow-dim); border-left: 3px solid var(--yellow); }
+.c-warn    strong { color: var(--yellow); }
+.c-danger  { background: var(--red-dim);    border-left: 3px solid var(--red);    }
+.c-danger  strong { color: var(--red); }
+.c-analogy { background: var(--orange-dim); border-left: 3px solid var(--orange); }
+.c-analogy strong { color: var(--orange); }
+
+/* ======== FORMULA ======== */
+.formula {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #cdd6f4;
+  line-height: 2;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+.formula .lbl {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  display: block;
+}
+.fh  { color: var(--green); }
+.fv  { color: var(--blue);  }
+.fn  { color: var(--yellow);}
+.fc  { color: var(--text-dim); font-style: italic; }
+.fr  { color: var(--red);   }
+.fp  { color: var(--purple);}
+
+/* ======== PSEUDOCODE ======== */
+.pcode {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  line-height: 2.1;
+  overflow-x: auto;
+  margin: 14px 0;
+}
+.pk  { color: var(--purple); font-weight: 500; }
+.pf  { color: var(--green);  }
+.pv  { color: var(--blue);   }
+.pn  { color: var(--yellow); }
+.pc  { color: var(--text-dim); font-style: italic; }
+.pd  { color: var(--orange); }
+
+/* ======== TABLE ======== */
+.tbl {
+  width: 100%; border-collapse: collapse;
+  font-size: 13.5px; margin: 14px 0;
+  border-radius: 10px; overflow: hidden;
+}
+.tbl th {
+  background: var(--surface3);
+  color: var(--blue);
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border2);
+}
+.tbl td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-mid);
+  vertical-align: top;
+}
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ======== SOLVED PROBLEM ======== */
+.problem {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.problem-header {
+  background: var(--surface2);
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.prob-num {
+  background: var(--blue-dim);
+  color: var(--blue);
+  border: 1px solid rgba(77,158,247,0.3);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.problem-header h4 { color: #fff; font-size: 14px; line-height: 1.6; }
+.problem-body { padding: 20px 22px; }
+.solution-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--green); text-transform: uppercase;
+  margin-bottom: 10px; display: block;
+}
+.answer-box {
+  background: var(--green-dim);
+  border: 1px solid rgba(62,207,142,0.25);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+/* ======== STEPS ======== */
+.steps { margin: 12px 0; }
+.step {
+  display: flex; gap: 14px;
+  margin-bottom: 14px; align-items: flex-start;
+}
+.snum {
+  min-width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 12px;
+  flex-shrink: 0; margin-top: 2px;
+}
+.sn-blue   { background: var(--blue-dim);   color: var(--blue);   border: 1px solid rgba(77,158,247,0.4); }
+.sn-green  { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(62,207,142,0.4); }
+.sn-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(167,139,250,0.4); }
+.scontent strong { color: var(--text); display: block; margin-bottom: 3px; }
+.scontent p, .scontent { color: var(--text-mid); font-size: 14px; }
+
+/* ======== GRID ======== */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media(max-width:640px) { .g2,.g3 { grid-template-columns: 1fr; } }
+
+/* ======== NEURON DIAGRAM ======== */
+.neuron-diagram {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 20px;
+  margin: 16px 0;
+  text-align: center;
+  overflow-x: auto;
+}
+.neuron-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  min-width: 600px;
+}
+.dendrite-block {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.dendrite {
+  width: 90px; padding: 6px 10px;
+  background: var(--blue-dim);
+  border: 1px solid rgba(77,158,247,0.4);
+  border-radius: 6px;
+  font-size: 11px; color: var(--blue);
+  text-align: center;
+}
+.neuron-line {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  margin: 0 6px; flex-shrink: 0;
+}
+.cell-body {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--purple-dim) 0%, #0a0014 100%);
+  border: 2px solid var(--purple);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.cell-body span { font-size: 11px; color: var(--purple); font-weight: 600; }
+.axon-line {
+  width: 80px; height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--green));
+  flex-shrink: 0;
+}
+.terminal {
+  width: 70px; padding: 8px 6px;
+  background: var(--green-dim);
+  border: 1px solid rgba(62,207,142,0.4);
+  border-radius: 8px;
+  font-size: 11px; color: var(--green);
+  text-align: center;
+}
+.neuron-labels {
+  display: flex; justify-content: space-around;
+  margin-top: 14px;
+  flex-wrap: wrap; gap: 8px;
+}
+.nlabel {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.nl-blue   { background: var(--blue-dim);   color: var(--blue);   }
+.nl-purple { background: var(--purple-dim); color: var(--purple); }
+.nl-yellow { background: var(--yellow-dim); color: var(--yellow); }
+.nl-green  { background: var(--green-dim);  color: var(--green);  }
+
+/* ======== PERCEPTRON ======== */
+.perceptron-diagram {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.perc-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-width: 500px;
+}
+.input-col { display: flex; flex-direction: column; gap: 14px; }
+.inp-node {
+  width: 50px; height: 40px;
+  background: var(--blue-dim);
+  border: 1px solid rgba(77,158,247,0.5);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--blue);
+}
+.weight-col { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.w-node {
+  width: 44px; height: 28px;
+  background: var(--yellow-dim);
+  border: 1px solid rgba(245,200,66,0.4);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--yellow);
+}
+.sum-node {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--purple-dim);
+  border: 2px solid var(--purple);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px; color: var(--purple);
+  font-weight: 600; text-align: center;
+}
+.act-node {
+  width: 70px; height: 70px;
+  border-radius: 10px;
+  background: var(--teal-dim);
+  border: 2px solid var(--teal);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px; color: var(--teal);
+  font-weight: 600; text-align: center;
+}
+.out-node {
+  width: 60px; height: 50px;
+  border-radius: 8px;
+  background: var(--green-dim);
+  border: 1px solid rgba(62,207,142,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--green); font-weight: 700;
+}
+.arrow { color: var(--text-dim); font-size: 20px; flex-shrink: 0; }
+
+/* ======== STATE DIAGRAM ======== */
+.state-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 3px; margin: 14px 0;
+  overflow-x: auto;
+}
+.sbox {
+  min-width: 60px; height: 54px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 600;
+  flex-shrink: 0;
+}
+.sbox-tl { border-color: var(--green);  background: var(--green-dim);  color: var(--green);  }
+.sbox-tr { border-color: var(--yellow); background: var(--yellow-dim); color: var(--yellow); }
+.sbox-n  { border-color: var(--border); background: var(--surface2);   color: var(--text-mid); }
+.sbox small { font-size: 10px; font-weight: 400; opacity: 0.8; }
+.sdash { color: var(--text-dim); font-size: 22px; padding: 0 1px; }
+
+/* ======== Q-TABLE ======== */
+.qtable {
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; width: 100%; margin: 12px 0;
+}
+.qtable th {
+  background: var(--surface3);
+  color: var(--blue);
+  padding: 10px 14px; text-align: center;
+  font-size: 11px; border: 1px solid var(--border);
+}
+.qtable td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  text-align: center; color: var(--text-mid);
+}
+.qhighlight { background: var(--green-dim); color: var(--green); font-weight: 700; }
+
+/* ======== MDP GRAPH ======== */
+.mdp-graph {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin: 16px 0;
+  text-align: center;
+}
+.mdp-states-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.mdp-state {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 2px solid var(--blue);
+  background: var(--blue-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 800; color: var(--blue);
+}
+
+/* ======== TYPOGRAPHY ======== */
+h3 { font-size: 16px; font-weight: 700; color: #fff; margin: 22px 0 10px; }
+h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 14px 0 7px; }
+p  { color: var(--text-mid); margin-bottom: 10px; font-size: 14px; }
+ul, ol { padding-left: 20px; color: var(--text-mid); margin-bottom: 10px; }
+li { margin-bottom: 5px; font-size: 14px; }
+strong { color: var(--text); }
+em { color: var(--text-dim); }
+
+.badge {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  padding: 2px 9px; border-radius: 20px; letter-spacing: 0.5px;
+  margin-left: 8px; vertical-align: middle;
+}
+.b-red    { background: var(--red-dim);    color: var(--red);    border: 1px solid rgba(255,102,102,0.3); }
+.b-green  { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(62,207,142,0.3);  }
+.b-blue   { background: var(--blue-dim);   color: var(--blue);   border: 1px solid rgba(77,158,247,0.3);  }
+.b-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(245,200,66,0.3);  }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+/* ======== TOC ======== */
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 40px;
+}
+.toc-title { font-size: 13px; font-weight: 700; color: var(--blue); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+.toc-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 12px; border-radius: 8px;
+  text-decoration: none; color: var(--text-mid);
+  font-size: 13px; transition: background 0.2s;
+  margin-bottom: 2px;
+}
+.toc-item:hover { background: var(--surface2); color: var(--text); }
+.toc-n {
+  width: 24px; height: 24px; border-radius: 6px;
+  background: var(--surface3); color: var(--blue);
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.toc-group { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); padding: 10px 12px 4px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">// Complete Study Guide · Dark Mode</div>
+  <h1>Reinforcement &amp; <span>Representation Learning</span></h1>
+  <p>All 12 questions answered. Every important topic explained from scratch with analogies, diagrams, formulas, and solved problems.</p>
+  <div class="hero-pills">
+    <span class="pill">🧠 Q1–Q12 Covered</span>
+    <span class="pill">📐 MDP + Bellman</span>
+    <span class="pill">⚙️ Q-Learning + SARSA</span>
+    <span class="pill">🧬 Neural Networks</span>
+    <span class="pill">✅ Solved Problems</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#q1">Q1: RL History</a>
+    <a href="#q2">Q2: ML Types</a>
+    <a href="#q3">Q3: Limitations</a>
+    <a href="#q4">Q4: RL Elements</a>
+    <a href="#q5">Q5: Real-Time RL</a>
+    <a href="#q6">Q6: MDP</a>
+    <a href="#q7">Q7: Policy/Value</a>
+    <a href="#bellman">Bellman Eqs</a>
+    <a href="#qlearning">Q-Learning</a>
+    <a href="#sarsa">SARSA</a>
+    <a href="#q8">Q8: Bio Neuron</a>
+    <a href="#q9">Q9: Brain vs CPU</a>
+    <a href="#q10">Q10: Perceptron</a>
+    <a href="#q11">Q11: ADALINE</a>
+    <a href="#q12">Q12: Hidden Layers</a>
+    <a href="#solved">Solved Problems</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-title">📚 Table of Contents</div>
+  <div class="toc-group">Part 1 — Reinforcement Learning Theory</div>
+  <a class="toc-item" href="#q1"><span class="toc-n">1</span> What is RL? History &amp; Origin</a>
+  <a class="toc-item" href="#q2"><span class="toc-n">2</span> Machine Learning Types with Examples</a>
+  <a class="toc-item" href="#q3"><span class="toc-n">3</span> Limitations &amp; Scope of RL</a>
+  <a class="toc-item" href="#q4"><span class="toc-n">4</span> Elements of RL (Agent, State, Action, Reward...)</a>
+  <a class="toc-item" href="#q5"><span class="toc-n">5</span> Real-Time Implementation Problems of RL</a>
+  <div class="toc-group">Part 2 — MDP, Bellman, Algorithms</div>
+  <a class="toc-item" href="#q6"><span class="toc-n">6</span> MDP with Complete Mathematical Equations</a>
+  <a class="toc-item" href="#q7"><span class="toc-n">7</span> Policy, Agent, Value Functions, State &amp; Reward</a>
+  <a class="toc-item" href="#bellman"><span class="toc-n">★</span> Bellman Equations (Expectation + Optimality)</a>
+  <a class="toc-item" href="#qlearning"><span class="toc-n">★</span> Q-Learning Algorithm (Tabular)</a>
+  <a class="toc-item" href="#sarsa"><span class="toc-n">★</span> SARSA Algorithm</a>
+  <div class="toc-group">Part 3 — Neural Networks</div>
+  <a class="toc-item" href="#q8"><span class="toc-n">8</span> Biological Neuron — Dendrites, Cell Body, Axon</a>
+  <a class="toc-item" href="#q9"><span class="toc-n">9</span> Brain vs Computer + ANN Models</a>
+  <a class="toc-item" href="#q10"><span class="toc-n">10</span> Perceptron Model with Equations</a>
+  <a class="toc-item" href="#q11"><span class="toc-n">11</span> ADALINE Model</a>
+  <a class="toc-item" href="#q12"><span class="toc-n">12</span> Hidden Layers &amp; Activation Functions</a>
+  <div class="toc-group">Part 4 — Fully Solved Past Paper Problems</div>
+  <a class="toc-item" href="#solved"><span class="toc-n">✓</span> Rover Return + Q-Learning Convergence + MDP A,B,C</a>
+</div>
+
+<!-- ==================== Q1 ==================== -->
+<section id="q1">
+  <div class="ch">
+    <div class="ch-icon ci-blue">🤖</div>
+    <div class="ch-meta">
+      <h2>Q1 — What is RL? History &amp; Origin</h2>
+      <p>"Explain reinforcement learning, its history and origin with complete details"</p>
+    </div>
+  </div>
+
+  <div class="callout c-analogy">
+    <strong>🟠 Real Life First — The Dog Training Analogy</strong>
+    You never tell a dog in words what "sit" means. You try: dog sits → you give a treat (+reward). Dog jumps → you say no (−penalty). Over many repetitions, the dog <em>learns</em> on its own that sitting = treats = good strategy. That is Reinforcement Learning: <strong>learning by trial and error using reward signals.</strong>
+  </div>
+
+  <div class="card card-blue">
+    <h4>Formal Definition</h4>
+    <p><strong>Reinforcement Learning (RL)</strong> is a type of machine learning where an <strong>agent</strong> learns to make sequential decisions by interacting with an <strong>environment</strong>. It receives <strong>reward</strong> signals (positive or negative) and aims to learn a <strong>policy</strong> that maximizes the total accumulated reward over time — without being explicitly programmed with the rules.</p>
+    <p>Key phrase: <em>"Learning by trial and error through interaction."</em></p>
+  </div>
+
+  <h3>History &amp; Origin <span class="badge b-red">Exam Question</span></h3>
+  <div class="steps">
+    <div class="step"><div class="snum sn-blue">1950</div><div class="scontent"><strong>Alan Turing (1950)</strong><p>Proposed the concept of "learning machines." First philosophical idea that machines could learn from experience. Published "Computing Machinery and Intelligence."</p></div></div>
+    <div class="step"><div class="snum sn-blue">1954</div><div class="scontent"><strong>Minsky's SNARC (1954)</strong><p>Marvin Minsky built the first RL hardware — a simulated rat navigating a maze using trial-and-error with reward signals. First physical implementation of RL concepts.</p></div></div>
+    <div class="step"><div class="snum sn-blue">1957</div><div class="scontent"><strong>Bellman — Dynamic Programming (1957)</strong><p>Richard Bellman developed the mathematical foundation of RL: value functions, the principle of optimality, and the Bellman equation. The backbone of all RL algorithms today.</p></div></div>
+    <div class="step"><div class="snum sn-blue">1959</div><div class="scontent"><strong>Samuel's Checkers (1959)</strong><p>Arthur Samuel created a checkers-playing program that learned through self-play, becoming stronger than its creator. Coined the term "Machine Learning."</p></div></div>
+    <div class="step"><div class="snum sn-blue">1989</div><div class="scontent"><strong>Watkins — Q-Learning (1989)</strong><p>Christopher Watkins introduced Q-learning — the most famous model-free RL algorithm, which we still use today. Proved it converges to the optimal policy.</p></div></div>
+    <div class="step"><div class="snum sn-blue">1992</div><div class="scontent"><strong>TD-Gammon (1992)</strong><p>Gerald Tesauro's RL agent learned to play Backgammon at world champion level — the first major real-world RL success, beating human experts.</p></div></div>
+    <div class="step"><div class="snum sn-blue">2013</div><div class="scontent"><strong>DeepMind DQN (2013)</strong><p>Combined Deep Neural Networks + Q-Learning → learned to play 49 Atari games from raw pixels alone. This was the birth of "Deep Reinforcement Learning." Huge milestone.</p></div></div>
+    <div class="step"><div class="snum sn-blue">2016</div><div class="scontent"><strong>AlphaGo (2016)</strong><p>DeepMind's RL system defeated world champion Lee Sedol at the game of Go — previously considered impossible for AI. Used policy gradient + tree search + RL.</p></div></div>
+    <div class="step"><div class="snum sn-blue">2022+</div><div class="scontent"><strong>RLHF in Language Models (2022–now)</strong><p>RL from Human Feedback used to train ChatGPT, Claude, and other LLMs. RL now shapes what AI systems say, making them more helpful and aligned with human values.</p></div></div>
+  </div>
+
+  <h3>Connection with Other Fields</h3>
+  <div class="g2">
+    <div class="card card-blue">
+      <h4>RL ↔ Psychology</h4>
+      <p>Inspired by behavioral psychology (Pavlov, Skinner). The concept of reward/punishment shaping behavior is directly from classical and operant conditioning.</p>
+    </div>
+    <div class="card card-green">
+      <h4>RL ↔ Neuroscience</h4>
+      <p>Dopamine release in the brain matches the TD error in RL. The brain's reward circuits are the biological equivalent of Q-value updates.</p>
+    </div>
+    <div class="card card-purple">
+      <h4>RL ↔ Control Theory</h4>
+      <p>Both deal with sequential decision making. Control theory uses differential equations; RL uses sampling and value functions.</p>
+    </div>
+    <div class="card card-yellow">
+      <h4>RL ↔ Operations Research</h4>
+      <p>Dynamic programming, Markov chains, and optimization all come from OR. Bellman's work bridged OR and machine learning.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Q2 ==================== -->
+<section id="q2">
+  <div class="ch">
+    <div class="ch-icon ci-green">📚</div>
+    <div class="ch-meta">
+      <h2>Q2 — Machine Learning: Types of Learning</h2>
+      <p>"What do you understand by ML? Explain types of learning with suitable examples"</p>
+    </div>
+  </div>
+
+  <div class="card card-green">
+    <h4>What is Machine Learning?</h4>
+    <p>ML is a field of AI where systems learn from data and improve their performance automatically — without being explicitly programmed with rules for every situation.</p>
+    <p>Arthur Samuel (1959): <em>"Machine Learning is the field of study that gives computers the ability to learn without being explicitly programmed."</em></p>
+  </div>
+
+  <h3>3 Main Types of Learning</h3>
+
+  <div class="card card-blue">
+    <h4>1. Supervised Learning</h4>
+    <p>The algorithm learns from <strong>labeled training data</strong> — meaning every input has a correct output provided by a human teacher. The model learns to map inputs to outputs.</p>
+    <div class="formula">
+      <span class="lbl">How it works</span>
+      Input: Photo of cat  →  Label: "cat"<br>
+      Input: Photo of dog  →  Label: "dog"<br>
+      After training: Show new photo → model predicts "cat" or "dog"
+    </div>
+    <p><strong>Examples:</strong> Email spam detection, image classification, medical diagnosis, house price prediction, weather forecasting.</p>
+    <p><strong>Algorithms:</strong> Linear Regression, SVM, Decision Trees, Neural Networks</p>
+  </div>
+
+  <div class="card card-purple">
+    <h4>2. Unsupervised Learning</h4>
+    <p>The algorithm finds <strong>hidden patterns in unlabeled data</strong> — no correct answers are given. The model discovers structure on its own.</p>
+    <div class="formula">
+      <span class="lbl">How it works</span>
+      Input: 1000 customer shopping records (no labels)<br>
+      Model: Groups similar customers together automatically<br>
+      Output: "Group A = budget shoppers, Group B = luxury buyers..."
+    </div>
+    <p><strong>Examples:</strong> Customer segmentation, anomaly detection, recommendation systems, data compression, topic modeling.</p>
+    <p><strong>Algorithms:</strong> K-Means Clustering, PCA, Autoencoders</p>
+  </div>
+
+  <div class="card card-orange">
+    <h4>3. Reinforcement Learning</h4>
+    <p>The algorithm learns through <strong>interaction with an environment</strong>, receiving reward signals. No labeled examples — learns by trying things and seeing what works.</p>
+    <div class="formula">
+      <span class="lbl">How it works</span>
+      Agent tries action → Environment gives reward (+/−)<br>
+      Agent updates its strategy → Tries again<br>
+      Over time: Learns which actions maximize total reward
+    </div>
+    <p><strong>Examples:</strong> Game playing (Chess/Go), robotics, autonomous driving, trading bots, RLHF in ChatGPT.</p>
+    <p><strong>Algorithms:</strong> Q-Learning, SARSA, Policy Gradient, DQN</p>
+  </div>
+
+  <table class="tbl">
+    <tr><th>Feature</th><th>Supervised</th><th>Unsupervised</th><th>Reinforcement</th></tr>
+    <tr><td>Data type</td><td>Labeled (input+output)</td><td>Unlabeled (input only)</td><td>Experience (state+action+reward)</td></tr>
+    <tr><td>Feedback</td><td>Correct answer given</td><td>No feedback</td><td>Reward signal (delayed)</td></tr>
+    <tr><td>Goal</td><td>Predict output</td><td>Find structure</td><td>Maximize cumulative reward</td></tr>
+    <tr><td>Example</td><td>Spam filter</td><td>Customer grouping</td><td>Game playing AI</td></tr>
+  </table>
+</section>
+
+<!-- ==================== Q3 ==================== -->
+<section id="q3">
+  <div class="ch">
+    <div class="ch-icon ci-red">⚠️</div>
+    <div class="ch-meta">
+      <h2>Q3 — Limitations &amp; Scope of RL</h2>
+      <p>"What are the limitations and scope of reinforcement learning?"</p>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="card card-red">
+      <h4>❌ Limitations</h4>
+      <div class="steps">
+        <div class="step"><div class="snum sn-purple">1</div><div class="scontent"><strong>Sample Inefficiency</strong><p>RL needs millions of interactions to learn. AlphaGo trained on millions of games. Humans learn chess much faster.</p></div></div>
+        <div class="step"><div class="snum sn-purple">2</div><div class="scontent"><strong>Reward Design Problem</strong><p>Defining the right reward is extremely hard. Wrong reward → agent finds unintended shortcuts (reward hacking).</p></div></div>
+        <div class="step"><div class="snum sn-purple">3</div><div class="scontent"><strong>Dangerous Exploration</strong><p>In real world, exploration means trying bad actions — a robot exploring might crash, a medical agent might harm a patient.</p></div></div>
+        <div class="step"><div class="snum sn-purple">4</div><div class="scontent"><strong>Credit Assignment Problem</strong><p>Which past action caused a reward received much later? Tracing cause to effect over many steps is hard.</p></div></div>
+        <div class="step"><div class="snum sn-purple">5</div><div class="scontent"><strong>Non-Stationarity</strong><p>If the environment changes over time, the agent must relearn. Learned policies don't easily transfer to new environments.</p></div></div>
+        <div class="step"><div class="snum sn-purple">6</div><div class="scontent"><strong>Training Instability</strong><p>With neural networks (Deep RL), training can be unstable, sensitive to hyperparameters, and hard to reproduce.</p></div></div>
+      </div>
+    </div>
+    <div class="card card-green">
+      <h4>✅ Scope &amp; Applications</h4>
+      <div class="steps">
+        <div class="step"><div class="snum sn-green">1</div><div class="scontent"><strong>Game Playing</strong><p>Chess, Go, Atari, StarCraft — RL agents achieve superhuman performance.</p></div></div>
+        <div class="step"><div class="snum sn-green">2</div><div class="scontent"><strong>Robotics</strong><p>Robot arms learning to grasp, walk, manipulate objects — RL enables self-taught physical skills.</p></div></div>
+        <div class="step"><div class="snum sn-green">3</div><div class="scontent"><strong>Autonomous Vehicles</strong><p>Self-driving cars learn navigation, lane keeping, and collision avoidance through RL simulation.</p></div></div>
+        <div class="step"><div class="snum sn-green">4</div><div class="scontent"><strong>Healthcare</strong><p>Personalized treatment plans, drug discovery, dosage optimization — RL optimizes patient outcomes.</p></div></div>
+        <div class="step"><div class="snum sn-green">5</div><div class="scontent"><strong>Finance</strong><p>Algorithmic trading, portfolio management, market making — RL maximizes returns under uncertainty.</p></div></div>
+        <div class="step"><div class="snum sn-green">6</div><div class="scontent"><strong>NLP / LLMs</strong><p>RLHF (Reinforcement Learning from Human Feedback) trains ChatGPT, Claude, Gemini to be helpful and safe.</p></div></div>
+        <div class="step"><div class="snum sn-green">7</div><div class="scontent"><strong>Energy &amp; Resource Management</strong><p>Google used RL to reduce data center cooling energy by 40%. Power grid optimization.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Q4 ==================== -->
+<section id="q4">
+  <div class="ch">
+    <div class="ch-icon ci-yellow">🧩</div>
+    <div class="ch-meta">
+      <h2>Q4 — Elements of Reinforcement Learning</h2>
+      <p>"Explain the elements of RL" — the 8 building blocks</p>
+    </div>
+  </div>
+
+  <div class="callout c-tip">
+    <strong>💡 Study Strategy</strong>
+    These 8 elements appear in EVERY RL question. Master them with the Tic-Tac-Toe example and you can answer any variant of this question.
+  </div>
+
+  <div class="g2">
+    <div class="card card-blue">
+      <h4>1. 🤖 Agent</h4>
+      <p>The <strong>learner and decision maker</strong> that interacts with the environment. It observes states, takes actions, and updates its strategy based on rewards.</p>
+      <p><em>Tic-Tac-Toe: The AI player</em></p>
+    </div>
+    <div class="card card-green">
+      <h4>2. 🌍 Environment</h4>
+      <p>Everything <strong>outside the agent</strong>. It receives actions, transitions to a new state, and returns a reward. The agent cannot control the environment directly.</p>
+      <p><em>Tic-Tac-Toe: The game board + opponent</em></p>
+    </div>
+    <div class="card card-blue">
+      <h4>3. 📍 State (S)</h4>
+      <p>A <strong>complete description of the current situation</strong>. The agent observes the state to decide what action to take next.</p>
+      <p><em>Tic-Tac-Toe: Current arrangement of X's and O's on the board</em></p>
+    </div>
+    <div class="card card-green">
+      <h4>4. 🎮 Action (A)</h4>
+      <p>The <strong>set of choices available</strong> to the agent in each state. The agent selects one action per time step.</p>
+      <p><em>Tic-Tac-Toe: Placing your mark in any empty cell (up to 9 choices)</em></p>
+    </div>
+    <div class="card card-yellow">
+      <h4>5. 🏆 Reward (R)</h4>
+      <p>A <strong>scalar feedback signal</strong> from the environment after each action. The agent's sole objective is to maximize the total accumulated reward over time.</p>
+      <p><em>Tic-Tac-Toe: +1 win, 0 draw, −1 loss</em></p>
+    </div>
+    <div class="card card-purple">
+      <h4>6. 📋 Policy (π)</h4>
+      <p>The agent's <strong>strategy</strong> — a mapping from states to actions. It tells the agent what to do in every situation. Can be deterministic or stochastic.</p>
+      <p><em>Tic-Tac-Toe: "Given this board position → play in this cell"</em></p>
+    </div>
+    <div class="card card-teal">
+      <h4>7. 💎 Value Function V(s)</h4>
+      <p>Predicts <strong>expected long-term return</strong> from state s. Not the immediate reward — but how good a state is in terms of future prospects.</p>
+      <p><em>Tic-Tac-Toe: How likely is this board position to eventually lead to a win?</em></p>
+    </div>
+    <div class="card card-orange">
+      <h4>8. 🗺 Model (Optional)</h4>
+      <p>The agent's <strong>internal model of the environment</strong> — predicts next state and reward. Agents with models are model-based; without are model-free (Q-learning is model-free).</p>
+      <p><em>Tic-Tac-Toe: Predicting opponent's likely response to your move</em></p>
+    </div>
+  </div>
+
+  <h3>Exploration vs Exploitation <span class="badge b-red">Very Important Topic</span></h3>
+  <div class="callout c-analogy">
+    <strong>🟠 Restaurant Analogy</strong>
+    You're visiting a city for 7 days. <strong>Exploitation</strong>: Go to the same restaurant you know is good every day (safe, but miss out). <strong>Exploration</strong>: Try a new restaurant each day (risky, but might find something amazing). The smart strategy: explore early, then exploit your best discovery. That's ε-greedy.
+  </div>
+  <div class="g2">
+    <div class="card card-blue">
+      <h4>🔍 Exploration</h4>
+      <p>Taking <strong>random or unfamiliar actions</strong> to discover potentially better strategies. Required for Q-values of all (s,a) pairs to converge.</p>
+      <p><strong>ε-greedy:</strong> with probability ε → take random action</p>
+    </div>
+    <div class="card card-green">
+      <h4>💰 Exploitation</h4>
+      <p>Choosing the <strong>currently known best action</strong> to maximize immediate reward based on learned Q-values.</p>
+      <p><strong>ε-greedy:</strong> with probability 1-ε → take argmax Q(s,a)</p>
+    </div>
+  </div>
+  <div class="callout c-danger">
+    <strong>❗ Key Insight — Pure Exploitation Fails</strong>
+    If ε=0 (always exploit, never explore), the agent gets stuck in the first decent solution it finds. Q-values for unvisited states remain wrong forever → suboptimal policy. This is exactly what Q5 on your exam asks!
+  </div>
+</section>
+
+<!-- ==================== Q5 ==================== -->
+<section id="q5">
+  <div class="ch">
+    <div class="ch-icon ci-orange">⚡</div>
+    <div class="ch-meta">
+      <h2>Q5 — Real-Time Implementation Problems of RL</h2>
+      <p>"Explain the real-time implementation problems of reinforcement learning"</p>
+    </div>
+  </div>
+
+  <div class="callout c-note">
+    <strong>📝 What This Question Asks</strong>
+    When you try to use RL in the REAL WORLD (not a simulation or game), you face major practical challenges. This question asks you to identify and explain those challenges.
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="snum sn-blue">1</div><div class="scontent">
+      <strong>The Exploration Problem in Real Environments</strong>
+      <p>In simulation, exploration is free — a virtual robot can crash 10,000 times. In the real world, exploration is expensive and dangerous. A real robot exploring might damage itself, injure people, or destroy equipment. This severely limits how much you can explore.</p>
+      <p><em>Solution approaches: Sim-to-Real (train in simulation, deploy in real world), safe exploration algorithms.</em></p>
+    </div></div>
+    <div class="step"><div class="snum sn-blue">2</div><div class="scontent">
+      <strong>Slow Learning / Sample Inefficiency</strong>
+      <p>Real robots can't perform millions of trial-and-error attempts in real-time. Learning slows dramatically because: physical actions take real time, hardware wears out, and you can't fast-forward physics.</p>
+      <p><em>Solution: Model-based RL, transfer learning, sim-to-real transfer.</em></p>
+    </div></div>
+    <div class="step"><div class="snum sn-blue">3</div><div class="scontent">
+      <strong>Partial Observability</strong>
+      <p>Real environments are partially observable — sensors are noisy, incomplete, or unreliable. The Markov assumption (state contains full information) often breaks down. You might not know the full state.</p>
+      <p><em>Solution: POMDPs (Partially Observable MDPs), memory-based agents (RNNs/LSTMs).</em></p>
+    </div></div>
+    <div class="step"><div class="snum sn-blue">4</div><div class="scontent">
+      <strong>Delayed and Sparse Rewards</strong>
+      <p>In many real tasks, rewards are rare and delayed. A robot learning to walk might get a reward only after completing a full walk — thousands of steps later. Which action was responsible?</p>
+      <p><em>Solution: Reward shaping, eligibility traces (SARSA-λ), intrinsic motivation.</em></p>
+    </div></div>
+    <div class="step"><div class="snum sn-blue">5</div><div class="scontent">
+      <strong>Non-Stationary Environments</strong>
+      <p>Real-world environments change over time. Traffic patterns change, patient health changes, market conditions shift. A policy trained in one condition may fail in another.</p>
+      <p><em>Solution: Continual learning, adaptive algorithms, periodic retraining.</em></p>
+    </div></div>
+    <div class="step"><div class="snum sn-blue">6</div><div class="scontent">
+      <strong>High-Dimensional State/Action Spaces</strong>
+      <p>Real robots have many joints, sensors, and actuators → huge state and action spaces. Tabular Q-learning becomes impossible. A humanoid robot has ~30 joints each with continuous positions.</p>
+      <p><em>Solution: Deep RL (DQN, PPO), function approximation.</em></p>
+    </div></div>
+    <div class="step"><div class="snum sn-blue">7</div><div class="scontent">
+      <strong>Hardware Constraints &amp; Real-Time Constraints</strong>
+      <p>RL computations must be fast enough to make decisions in real-time (e.g., a drone must react in milliseconds). Large neural networks may be too slow to run on embedded hardware.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- ==================== Q6 ==================== -->
+<section id="q6">
+  <div class="ch">
+    <div class="ch-icon ci-purple">📐</div>
+    <div class="ch-meta">
+      <h2>Q6 — MDP with Complete Mathematical Equations</h2>
+      <p>"Explain MDP with complete mathematical equation" — the formal framework of RL</p>
+    </div>
+  </div>
+
+  <div class="callout c-analogy">
+    <strong>🟠 Analogy — MDP as a Board Game</strong>
+    A board game is a perfect MDP: the board position = state, your move = action, dice outcome = transition probability, points scored = reward, and your playing strategy = policy. MDP is just the mathematical way to write down any sequential decision problem.
+  </div>
+
+  <div class="card card-purple">
+    <h4>MDP Formal Definition — The 5-Tuple</h4>
+    <div class="formula">
+      <span class="lbl">MDP = (S, A, P, R, γ)</span>
+      <span class="fv">S</span> = State space: set of all possible states<br>
+      <span class="fv">A</span> = Action space: set of all possible actions<br>
+      <span class="fv">P(s'|s,a)</span> = Transition probability: P(next state = s' | in state s, take action a)<br>
+      <span class="fv">R(s,a,s')</span> = Reward function: reward received on transition s→a→s'<br>
+      <span class="fn">γ</span> = Discount factor: 0 ≤ γ ≤ 1, controls importance of future rewards
+    </div>
+  </div>
+
+  <h3>The Markov Property</h3>
+  <div class="formula">
+    <span class="lbl">Markov Property (mathematical statement)</span>
+    P(S<span class="fn">t+1</span> | S<span class="fn">t</span>, A<span class="fn">t</span>) = P(S<span class="fn">t+1</span> | S<span class="fn">t</span>, A<span class="fn">t</span>, S<span class="fn">t-1</span>, A<span class="fn">t-1</span>, ..., S<span class="fn">0</span>)<br><br>
+    <span class="fc">"The future depends only on the current state, not on the full history."</span>
+  </div>
+
+  <h3>Return — The Discounted Cumulative Reward</h3>
+  <div class="formula">
+    <span class="lbl">Return G_t (total discounted future reward from time t)</span>
+    G<span class="fn">t</span> = R<span class="fn">t+1</span> + <span class="fn">γ</span>·R<span class="fn">t+2</span> + <span class="fn">γ²</span>·R<span class="fn">t+3</span> + <span class="fn">γ³</span>·R<span class="fn">t+4</span> + ...<br><br>
+    G<span class="fn">t</span> = Σ<span class="fn">k=0</span><sup>∞</sup> <span class="fn">γ<sup>k</sup></span> · R<span class="fn">t+k+1</span><br><br>
+    <span class="fc">-- Recursive (shortcut) form — use this for calculations: --</span><br>
+    <span class="fh">G<span class="fn">t</span> = R<span class="fn">t+1</span> + γ · G<span class="fn">t+1</span></span>
+  </div>
+
+  <h3>State-Value and Action-Value Functions</h3>
+  <div class="g2">
+    <div class="formula">
+      <span class="lbl">State-Value Function V^π(s)</span>
+      <span class="fv">V<sup>π</sup>(s)</span> = E<sub>π</sub>[G<span class="fn">t</span> | S<span class="fn">t</span>=s]<br><br>
+      = E<sub>π</sub>[Σ <span class="fn">γ<sup>k</sup></span>·R<span class="fn">t+k+1</span> | S<span class="fn">t</span>=s]<br><br>
+      <span class="fc">"Expected return from state s<br>following policy π"</span>
+    </div>
+    <div class="formula">
+      <span class="lbl">Action-Value Function Q^π(s,a)</span>
+      <span class="fv">Q<sup>π</sup>(s,a)</span> = E<sub>π</sub>[G<span class="fn">t</span> | S<span class="fn">t</span>=s, A<span class="fn">t</span>=a]<br><br>
+      <span class="fc">"Expected return from state s,<br>taking action a, then following π"</span><br><br>
+      V<sup>π</sup>(s) = Σ<sub>a</sub> π(a|s)·Q<sup>π</sup>(s,a)
+    </div>
+  </div>
+
+  <h3>MDP Decision Logic — 4-Tuple Construction <span class="badge b-red">Important Topic</span></h3>
+  <div class="card card-teal">
+    <p>The 4-tuple (S, A, P, R) defines the decision logic. Here's how it works step by step:</p>
+    <div class="steps">
+      <div class="step"><div class="snum sn-blue">1</div><div class="scontent"><strong>Agent in state s ∈ S observes current situation</strong></div></div>
+      <div class="step"><div class="snum sn-blue">2</div><div class="scontent"><strong>Agent selects action a ∈ A according to policy π(a|s)</strong></div></div>
+      <div class="step"><div class="snum sn-blue">3</div><div class="scontent"><strong>Environment samples next state s' ~ P(s'|s,a)</strong><p>In stochastic environments, the same action can lead to different states with different probabilities.</p></div></div>
+      <div class="step"><div class="snum sn-blue">4</div><div class="scontent"><strong>Agent receives reward r = R(s,a,s') and observes s'</strong></div></div>
+      <div class="step"><div class="snum sn-blue">5</div><div class="scontent"><strong>Repeat from step 1 with new state s = s'</strong></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Q7 ==================== -->
+<section id="q7">
+  <div class="ch">
+    <div class="ch-icon ci-teal">🗺</div>
+    <div class="ch-meta">
+      <h2>Q7 — Policy, Agent, Value Functions, State &amp; Reward</h2>
+      <p>"Explain with suitable diagram" — connecting all core concepts</p>
+    </div>
+  </div>
+
+  <h3>The RL Interaction Diagram</h3>
+  <div class="card card-teal" style="text-align:center; padding:28px;">
+    <div style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;">
+      <div style="background:var(--blue-dim);border:2px solid var(--blue);border-radius:12px;padding:16px 24px;min-width:130px;">
+        <div style="font-size:24px;">🤖</div>
+        <div style="color:var(--blue);font-weight:700;font-size:14px;">AGENT</div>
+        <div style="font-size:11px;color:var(--text-dim);">has Policy π</div>
+        <div style="font-size:11px;color:var(--text-dim);">has Value V(s)</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
+        <div style="color:var(--green);font-size:12px;font-weight:600;">Action a</div>
+        <div style="font-size:24px;color:var(--blue);">→</div>
+        <div style="font-size:24px;color:var(--yellow);">←</div>
+        <div style="color:var(--yellow);font-size:12px;font-weight:600;">State s' + Reward r</div>
+      </div>
+      <div style="background:var(--green-dim);border:2px solid var(--green);border-radius:12px;padding:16px 24px;min-width:130px;">
+        <div style="font-size:24px;">🌍</div>
+        <div style="color:var(--green);font-weight:700;font-size:14px;">ENVIRONMENT</div>
+        <div style="font-size:11px;color:var(--text-dim);">contains States S</div>
+        <div style="font-size:11px;color:var(--text-dim);">gives Rewards R</div>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-size:13px;color:var(--text-dim);">At each time step: Agent observes State → applies Policy → takes Action → Environment gives Reward + new State</p>
+  </div>
+
+  <div class="g2">
+    <div class="card card-blue">
+      <h4>State (S) — Where am I?</h4>
+      <p>A complete description of the current situation. The agent observes s_t at each time step and uses it to decide what to do.</p>
+      <div class="formula"><span class="fc">S = {s₁, s₂, ..., sₙ} — discrete or continuous</span></div>
+    </div>
+    <div class="card card-yellow">
+      <h4>Reward (R) — How well did I do?</h4>
+      <p>Scalar feedback after each action. The agent's goal is to maximize: G_t = Σ γ^k · R_{t+k+1}</p>
+      <div class="formula"><span class="fc">R: S × A × S → ℝ  (maps transition to a number)</span></div>
+    </div>
+    <div class="card card-purple">
+      <h4>Policy (π) — What should I do?</h4>
+      <p>The agent's decision rule. Maps states to actions.</p>
+      <div class="formula">
+        Deterministic: π(s) = a<br>
+        Stochastic:    π(a|s) = P(A=a|S=s)
+      </div>
+    </div>
+    <div class="card card-teal">
+      <h4>Value Function — How good is this?</h4>
+      <div class="formula">
+        V<sup>π</sup>(s) = E[G_t | S_t=s]  <span class="fc">← State value</span><br>
+        Q<sup>π</sup>(s,a) = E[G_t | S_t=s, A_t=a]  <span class="fc">← Action value</span><br>
+        π*(s) = argmax_a Q*(s,a)  <span class="fc">← Optimal policy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BELLMAN ==================== -->
+<section id="bellman">
+  <div class="ch">
+    <div class="ch-icon ci-yellow">🔔</div>
+    <div class="ch-meta">
+      <h2>Bellman Equations — Complete Guide</h2>
+      <p>Expectation + Optimality + Frozen Lake modification</p>
+    </div>
+  </div>
+
+  <div class="callout c-analogy">
+    <strong>🟠 GPS Analogy — Why Bellman?</strong>
+    Calculating the total value of a state directly is impossible — there are infinite future paths. Bellman's insight: break it recursively. "Value of state s = immediate reward + γ × value of where you end up." Just like GPS: distance A→Z = distance A→B + distance B→Z. This recursion makes RL computationally tractable.
+  </div>
+
+  <h3>Bellman Expectation Equation <span class="badge b-red">Write in Exam</span></h3>
+  <div class="card card-yellow">
+    <div class="formula">
+      <span class="lbl">Bellman Expectation — State Value V^π(s)</span>
+      <span class="fv">V<sup>π</sup>(s)</span> = Σ<sub>a</sub> <span class="fp">π(a|s)</span> · Σ<sub>s'</sub> <span class="fv">P(s'|s,a)</span> · [<span class="fh">R(s,a,s')</span> + <span class="fn">γ</span> · <span class="fv">V<sup>π</sup>(s')</span>]<br><br>
+      <span class="fc">-- Reading it: value of s = (for each action: probability of that action × (for each next state: probability of landing there × [reward + discounted value of next state])) --</span><br><br>
+      <span class="fc">-- Simplified (deterministic policy, one possible next state): --</span><br>
+      <span class="fv">V<sup>π</sup>(s)</span> = <span class="fh">R(s,a)</span> + <span class="fn">γ</span> · <span class="fv">V<sup>π</sup>(s')</span>
+    </div>
+    <div class="formula">
+      <span class="lbl">Bellman Expectation — Action Value Q^π(s,a)</span>
+      <span class="fv">Q<sup>π</sup>(s,a)</span> = Σ<sub>s'</sub> P(s'|s,a) · [R(s,a,s') + <span class="fn">γ</span> · Σ<sub>a'</sub> <span class="fp">π(a'|s')</span> · <span class="fv">Q<sup>π</sup>(s',a')</span>]
+    </div>
+  </div>
+
+  <h3>Bellman Optimality Equation <span class="badge b-red">Key Difference</span></h3>
+  <div class="card card-orange">
+    <p>Replace the weighted average Σπ(a|s) with <strong>max</strong> — take the best possible action, not an average.</p>
+    <div class="formula">
+      <span class="lbl">Bellman Optimality — V*(s)</span>
+      <span class="fh">V*(s)</span> = <span class="fr">max</span><sub>a</sub> Σ<sub>s'</sub> P(s'|s,a) · [R(s,a,s') + <span class="fn">γ</span> · <span class="fh">V*(s')</span>]<br><br>
+      <span class="lbl">Bellman Optimality — Q*(s,a)</span>
+      <span class="fh">Q*(s,a)</span> = Σ<sub>s'</sub> P(s'|s,a) · [R(s,a,s') + <span class="fn">γ</span> · <span class="fr">max</span><sub>a'</sub> <span class="fh">Q*(s',a')</span>]<br><br>
+      <span class="lbl">Optimal Policy</span>
+      <span class="fh">π*(s)</span> = <span class="fr">argmax</span><sub>a</sub> Q*(s,a)
+    </div>
+  </div>
+
+  <table class="tbl">
+    <tr><th>Type</th><th>Uses</th><th>Gives</th></tr>
+    <tr><td><strong>Bellman Expectation</strong></td><td>Σ over π(a|s) — average</td><td>Value under specific policy π</td></tr>
+    <tr><td><strong>Bellman Optimality</strong></td><td>max over actions</td><td>Optimal value V* and Q*</td></tr>
+  </table>
+
+  <h3>Frozen Lake — Stochastic Bellman Modification <span class="badge b-red">Important Topic</span></h3>
+  <div class="card card-blue">
+    <p>In Frozen Lake, the floor is slippery — actions don't always go where intended. The environment is <strong>stochastic</strong>. The standard Bellman equation must account for all possible outcomes.</p>
+    <div class="formula">
+      <span class="lbl">Standard Bellman (Deterministic)</span>
+      V(s) = R + γ·V(s')  <span class="fc">← Only one possible next state</span><br><br>
+      <span class="lbl">Modified Bellman (Stochastic — Frozen Lake)</span>
+      V(s) = Σ<sub>s'</sub> <span class="fv">P(s'|s,a)</span> · [R(s,a,s') + <span class="fn">γ</span>·V(s')]<br><br>
+      <span class="fc">In Frozen Lake:</span><br>
+      P(intended direction)    = 1/3<br>
+      P(90° left of intended)  = 1/3<br>
+      P(90° right of intended) = 1/3<br><br>
+      V(s) = (1/3)[R₁+γV(s₁')] + (1/3)[R₂+γV(s₂')] + (1/3)[R₃+γV(s₃')]<br><br>
+      <span class="fc">Holes: R=0, V=0 (dead end). Goal: R=+1. Agent must average over slippage.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Q-LEARNING ==================== -->
+<section id="qlearning">
+  <div class="ch">
+    <div class="ch-icon ci-blue">🎯</div>
+    <div class="ch-meta">
+      <h2>Q-Learning — Tabular Algorithm</h2>
+      <p>Off-policy, model-free algorithm for finding optimal Q*</p>
+    </div>
+  </div>
+
+  <div class="formula">
+    <span class="lbl">Q-Learning Update Rule — The Core Formula</span>
+    <span class="fv">Q(s,a)</span> ← <span class="fv">Q(s,a)</span> + <span class="fn">α</span> · [<span class="fh">R</span> + <span class="fn">γ</span>·<span class="fh">max<sub>a'</sub>Q(s',a')</span> − <span class="fv">Q(s,a)</span>]<br><br>
+    <span class="fc">α = learning rate (0 &lt; α ≤ 1) — how fast to update</span><br>
+    <span class="fc">R = reward received</span><br>
+    <span class="fh">max<sub>a'</sub>Q(s',a')</span> = <span class="fc">BEST Q-value in next state (greedy — KEY feature of Q-learning)</span><br>
+    <span class="fc">TD Error = [R + γ·maxQ(s',a')] − Q(s,a) — how wrong our estimate was</span>
+  </div>
+
+  <div class="pcode">
+<span class="pc">ALGORITHM: Q-Learning (Tabular)</span><br>
+<br>
+<span class="pk">Initialize:</span><br>
+&nbsp;&nbsp;Q(s,a) = <span class="pn">0</span>  for all states s, all actions a<br>
+<br>
+<span class="pk">For</span> each episode (1, 2, 3, ...):<br>
+&nbsp;&nbsp;<span class="pv">s</span> ← initial state<br>
+<br>
+&nbsp;&nbsp;<span class="pk">Repeat</span> for each step:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc">Choose action using ε-greedy:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pk">if</span> random() &lt; <span class="pd">ε</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pv">a</span> ← <span class="pf">random_action()</span>  <span class="pc">← Explore</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pk">else</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pv">a</span> ← <span class="pf">argmax</span>(Q(<span class="pv">s</span>, ·))  <span class="pc">← Exploit best known</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc">Take action, observe result:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Take action <span class="pv">a</span>, observe reward <span class="pv">r</span> and next state <span class="pv">s'</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc">THE KEY UPDATE STEP:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Q(<span class="pv">s</span>,<span class="pv">a</span>) ← Q(<span class="pv">s</span>,<span class="pv">a</span>) + <span class="pd">α</span>·[<span class="pv">r</span> + <span class="pd">γ</span>·<span class="pf">max</span><sub>a'</sub>Q(<span class="pv">s'</span>,a') − Q(<span class="pv">s</span>,<span class="pv">a</span>)]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc">↑ Uses MAX (off-policy — learns optimal regardless of behavior)</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pv">s</span> ← <span class="pv">s'</span><br>
+<br>
+&nbsp;&nbsp;<span class="pk">Until</span> s is terminal<br>
+<span class="pk">Until</span> Q-values converge
+  </div>
+
+  <div class="callout c-warn">
+    <strong>⚠ Convergence Conditions</strong>
+    Q-learning converges to Q* ONLY if: (1) Every (s,a) pair visited infinitely often — needs exploration. (2) Learning rate α satisfies Σα=∞ and Σα²&lt;∞. (3) Rewards are bounded. Without condition 1 → stuck in suboptimal policy.
+  </div>
+</section>
+
+<!-- ==================== SARSA ==================== -->
+<section id="sarsa">
+  <div class="ch">
+    <div class="ch-icon ci-green">🔄</div>
+    <div class="ch-meta">
+      <h2>SARSA Algorithm</h2>
+      <p>On-policy algorithm — State Action Reward State Action</p>
+    </div>
+  </div>
+
+  <div class="formula">
+    <span class="lbl">SARSA Update Rule</span>
+    <span class="fv">Q(s,a)</span> ← <span class="fv">Q(s,a)</span> + <span class="fn">α</span> · [<span class="fh">R</span> + <span class="fn">γ</span>·<span class="fh">Q(s',a')</span> − <span class="fv">Q(s,a)</span>]<br><br>
+    <span class="fc">a' = ACTUAL next action chosen by current ε-greedy policy (NOT max)</span><br>
+    <span class="fc">This is the KEY difference from Q-learning!</span>
+  </div>
+
+  <div class="pcode">
+<span class="pc">ALGORITHM: SARSA (On-Policy)</span><br>
+<br>
+<span class="pk">Initialize:</span> Q(s,a) = <span class="pn">0</span> for all s,a<br>
+<br>
+<span class="pk">For</span> each episode:<br>
+&nbsp;&nbsp;<span class="pv">s</span> ← initial state<br>
+&nbsp;&nbsp;<span class="pv">a</span> ← <span class="pf">ε-greedy</span>(Q, <span class="pv">s</span>)  <span class="pc">← Choose FIRST action before loop</span><br>
+<br>
+&nbsp;&nbsp;<span class="pk">Repeat</span> for each step:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Take action <span class="pv">a</span>, observe <span class="pv">r</span>, <span class="pv">s'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pv">a'</span> ← <span class="pf">ε-greedy</span>(Q, <span class="pv">s'</span>)  <span class="pc">← Choose NEXT action (from policy, not max)</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Q(<span class="pv">s</span>,<span class="pv">a</span>) ← Q(<span class="pv">s</span>,<span class="pv">a</span>) + <span class="pd">α</span>·[<span class="pv">r</span> + <span class="pd">γ</span>·Q(<span class="pv">s'</span>,<span class="pv">a'</span>) − Q(<span class="pv">s</span>,<span class="pv">a</span>)]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc">↑ Uses ACTUAL a' (on-policy — key difference from Q-learning)</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pv">s</span> ← <span class="pv">s'</span>&nbsp;&nbsp;&nbsp;<span class="pv">a</span> ← <span class="pv">a'</span>  <span class="pc">← Both state AND action advance</span><br>
+&nbsp;&nbsp;<span class="pk">Until</span> terminal state
+  </div>
+
+  <h3>Q-Learning vs SARSA <span class="badge b-red">Exam Comparison</span></h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Q-Learning</th><th>SARSA</th></tr>
+    <tr><td>Policy type</td><td>Off-policy</td><td>On-policy</td></tr>
+    <tr><td>Update uses</td><td><strong>max Q(s',a')</strong> — greedy</td><td><strong>Q(s',a')</strong> — actual action</td></tr>
+    <tr><td>What it learns</td><td>Optimal Q* (regardless of behavior)</td><td>Q for the current policy</td></tr>
+    <tr><td>Safety</td><td>Aggressive — ignores exploration risk</td><td>Conservative — safer in learning</td></tr>
+    <tr><td>Convergence</td><td>Converges to optimal Q*</td><td>Converges to Q^π</td></tr>
+    <tr><td>Key word</td><td><strong>max</strong></td><td><strong>actual a'</strong></td></tr>
+  </table>
+</section>
+
+<!-- ==================== Q8 ==================== -->
+<section id="q8">
+  <div class="ch">
+    <div class="ch-icon ci-teal">🧬</div>
+    <div class="ch-meta">
+      <h2>Q8 — Biological Neuron: Dendrites, Cell Body, Axon</h2>
+      <p>"Explain functioning of biological neuron with complete diagram"</p>
+    </div>
+  </div>
+
+  <div class="callout c-note">
+    <strong>📝 Why This Is Here</strong>
+    RL connects to representation learning and neural networks. Artificial Neural Networks (ANN) are directly inspired by biological neurons. Understanding the biological basis helps you understand WHY ANNs are designed the way they are.
+  </div>
+
+  <div class="neuron-diagram">
+    <p style="font-size:12px;color:var(--text-dim);margin-bottom:20px;">Simplified Biological Neuron</p>
+    <div class="neuron-row">
+      <div class="dendrite-block">
+        <div class="dendrite">Signal 1 →</div>
+        <div class="dendrite">Signal 2 →</div>
+        <div class="dendrite">Signal 3 →</div>
+      </div>
+      <div class="neuron-line"></div>
+      <div class="cell-body">
+        <span>Cell</span>
+        <span>Body</span>
+        <span style="font-size:9px;">(Soma)</span>
+      </div>
+      <div class="axon-line"></div>
+      <div class="terminal">
+        <div>Terminal</div>
+        <div style="font-size:9px;">→ next neuron</div>
+      </div>
+    </div>
+    <div class="neuron-labels">
+      <span class="nlabel nl-blue">Dendrites — receive signals</span>
+      <span class="nlabel nl-purple">Cell Body — process &amp; sum</span>
+      <span class="nlabel nl-yellow">Axon — transmit signal</span>
+      <span class="nlabel nl-green">Synapse — output</span>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card card-blue">
+      <h4>🌿 Dendrites</h4>
+      <p>Branch-like extensions of the neuron that <strong>receive electrical/chemical signals</strong> from other neurons. A single neuron can have thousands of dendrites, accepting input from thousands of other neurons simultaneously.</p>
+      <p><strong>ANN equivalent:</strong> Input connections × weights (x₁w₁, x₂w₂, ...) — each dendrite corresponds to a weighted input signal.</p>
+    </div>
+    <div class="card card-purple">
+      <h4>🧠 Cell Body (Soma)</h4>
+      <p>The <strong>main body of the neuron</strong> containing the nucleus. It <strong>integrates all incoming signals</strong> from dendrites — adds them up — and decides whether to fire an output signal (action potential).</p>
+      <p><strong>ANN equivalent:</strong> The summation unit + activation function: decides whether to "fire" (activate) based on total weighted input.</p>
+    </div>
+    <div class="card card-yellow">
+      <h4>⚡ Axon</h4>
+      <p>A long fiber that <strong>carries the output signal</strong> from the cell body to other neurons. Can be very long (up to 1 meter in spinal cord). Ends in terminal branches connected to next neurons via synapses.</p>
+      <p><strong>ANN equivalent:</strong> The output value passed to the next layer of neurons.</p>
+    </div>
+    <div class="card card-green">
+      <h4>🔗 Synapse</h4>
+      <p>The <strong>junction between two neurons</strong> where signals are transferred chemically (via neurotransmitters) or electrically. The strength of a synapse can change — this is how biological learning happens.</p>
+      <p><strong>ANN equivalent:</strong> The weight wᵢⱼ between neurons — learning = updating weights.</p>
+    </div>
+  </div>
+
+  <h3>How a Biological Neuron Works — Step by Step</h3>
+  <div class="steps">
+    <div class="step"><div class="snum sn-blue">1</div><div class="scontent"><strong>Receive:</strong> Multiple input signals arrive at dendrites from other neurons (excitatory or inhibitory)</div></div>
+    <div class="step"><div class="snum sn-blue">2</div><div class="scontent"><strong>Integrate:</strong> Cell body sums all incoming signals — some signals strengthen the effect, others weaken it</div></div>
+    <div class="step"><div class="snum sn-blue">3</div><div class="scontent"><strong>Threshold:</strong> If the total exceeds a threshold → neuron "fires" (action potential). If not → stays silent.</div></div>
+    <div class="step"><div class="snum sn-blue">4</div><div class="scontent"><strong>Transmit:</strong> Axon carries the electrical pulse to the next neuron's dendrites via the synapse</div></div>
+    <div class="step"><div class="snum sn-blue">5</div><div class="scontent"><strong>Learn:</strong> Repeated activation strengthens the synapse connection ("neurons that fire together, wire together" — Hebbian Learning)</div></div>
+  </div>
+</section>
+
+<!-- ==================== Q9 ==================== -->
+<section id="q9">
+  <div class="ch">
+    <div class="ch-icon ci-orange">🆚</div>
+    <div class="ch-meta">
+      <h2>Q9 — Brain vs Computer + ANN Models</h2>
+      <p>"Differentiate between human brain and computer. What are the models of ANN?"</p>
+    </div>
+  </div>
+
+  <h3>Human Brain vs Computer — Comparison</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Human Brain</th><th>Digital Computer</th></tr>
+    <tr><td><strong>Processing</strong></td><td>Massively parallel (~100 billion neurons firing simultaneously)</td><td>Sequential (one instruction at a time, though CPUs have multiple cores)</td></tr>
+    <tr><td><strong>Memory</strong></td><td>Distributed across connections (synapses). No clear separation of storage and processing.</td><td>Separate RAM (working) and HDD/SSD (storage). Clearly structured.</td></tr>
+    <tr><td><strong>Fault Tolerance</strong></td><td>Highly fault tolerant — brain continues working even with damage</td><td>Single component failure can crash the whole system</td></tr>
+    <tr><td><strong>Learning</strong></td><td>Learns by modifying synaptic strengths (biologically)</td><td>Cannot learn on its own; must be programmed or trained with ML</td></tr>
+    <tr><td><strong>Speed</strong></td><td>Slow in computation (~200 Hz)</td><td>Extremely fast (billions of operations per second)</td></tr>
+    <tr><td><strong>Energy</strong></td><td>~20 watts (very energy efficient)</td><td>Hundreds to thousands of watts</td></tr>
+    <tr><td><strong>Programming</strong></td><td>Not explicitly programmed — shaped by experience</td><td>Requires explicit programming for every task</td></tr>
+    <tr><td><strong>Pattern Recognition</strong></td><td>Excellent — recognizes faces, emotions, complex patterns effortlessly</td><td>Needs significant ML training to match human-level pattern recognition</td></tr>
+  </table>
+
+  <h3>Basic Models of ANN (Artificial Neural Networks)</h3>
+
+  <div class="card card-blue">
+    <h4>1. McCulloch-Pitts (MP) Neuron Model (1943)</h4>
+    <p>The very first mathematical neuron model. Binary inputs (0 or 1), binary output, fixed threshold.</p>
+    <div class="formula">
+      Output y = 1  if  Σ xᵢ ≥ θ (threshold)<br>
+      Output y = 0  if  Σ xᵢ &lt; θ<br><br>
+      <span class="fc">Limitation: No weights, no learning — purely mathematical model</span>
+    </div>
+  </div>
+
+  <div class="card card-green">
+    <h4>2. Perceptron (Rosenblatt, 1958)</h4>
+    <p>First trainable neural network model. Added adjustable weights and a learning rule.</p>
+    <p>Can learn to classify linearly separable patterns. (Explained in detail in Q10)</p>
+  </div>
+
+  <div class="card card-purple">
+    <h4>3. ADALINE (Adaptive Linear Neuron, 1960)</h4>
+    <p>Widrow and Hoff's model. Uses continuous outputs and LMS (Least Mean Squares) learning. More stable than Perceptron. (Detailed in Q11)</p>
+  </div>
+
+  <div class="card card-yellow">
+    <h4>4. Multi-Layer Perceptron (MLP)</h4>
+    <p>Multiple layers of neurons (input → hidden → output). Can solve non-linearly separable problems. Trained using Backpropagation. The foundation of modern deep learning.</p>
+  </div>
+
+  <div class="card card-teal">
+    <h4>5. Recurrent Neural Network (RNN)</h4>
+    <p>Neurons have connections back to themselves. Has memory — output depends on current AND past inputs. Used for sequences (speech, text, time series).</p>
+  </div>
+
+  <div class="card card-orange">
+    <h4>6. Convolutional Neural Network (CNN)</h4>
+    <p>Specialized for images. Uses convolutional filters to detect local patterns (edges, shapes). Dramatically fewer parameters than MLP for images. Used in face recognition, medical imaging.</p>
+  </div>
+</section>
+
+<!-- ==================== Q10 ==================== -->
+<section id="q10">
+  <div class="ch">
+    <div class="ch-icon ci-blue">⚙️</div>
+    <div class="ch-meta">
+      <h2>Q10 — Perceptron Model with Complete Equations</h2>
+      <p>"Explain perceptron model with complete equation"</p>
+    </div>
+  </div>
+
+  <div class="callout c-analogy">
+    <strong>🟠 Analogy — A Simple Voting System</strong>
+    Imagine a committee voting: each member's vote has a weight (importance). If weighted total votes ≥ threshold → decision is YES (1). Otherwise → NO (0). The Perceptron is exactly this: weighted sum of inputs → threshold decision.
+  </div>
+
+  <div class="perceptron-diagram">
+    <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;text-align:center;">Perceptron Architecture</p>
+    <div class="perc-row">
+      <div class="input-col">
+        <div class="inp-node">x₁</div>
+        <div class="inp-node">x₂</div>
+        <div class="inp-node">x₃</div>
+        <div class="inp-node">+1</div>
+      </div>
+      <div class="weight-col">
+        <div class="w-node">w₁</div>
+        <div class="w-node">w₂</div>
+        <div class="w-node">w₃</div>
+        <div class="w-node">b</div>
+      </div>
+      <span class="arrow">→</span>
+      <div class="sum-node">Σ<br><span style="font-size:10px;font-weight:400;">weighted<br>sum</span></div>
+      <span class="arrow">→</span>
+      <div class="act-node">Step<br>f(net)</div>
+      <span class="arrow">→</span>
+      <div class="out-node">ŷ</div>
+    </div>
+    <div style="margin-top:16px;text-align:center;font-size:12px;color:var(--text-dim);">
+      x₁,x₂,x₃ = inputs &nbsp;|&nbsp; w₁,w₂,w₃ = weights &nbsp;|&nbsp; b = bias &nbsp;|&nbsp; ŷ = predicted output
+    </div>
+  </div>
+
+  <h3>Complete Mathematical Equations</h3>
+  <div class="formula">
+    <span class="lbl">Step 1: Weighted Sum (Net Input)</span>
+    net = <span class="fv">w₁x₁</span> + <span class="fv">w₂x₂</span> + <span class="fv">w₃x₃</span> + ... + <span class="fv">wₙxₙ</span> + <span class="fn">b</span><br><br>
+    net = <span class="fh">Σᵢ wᵢxᵢ + b</span><br><br>
+    <span class="fc">Or in vector form: net = W·X + b  (dot product of weight and input vectors)</span>
+  </div>
+
+  <div class="formula">
+    <span class="lbl">Step 2: Activation Function (Step/Heaviside)</span>
+    ŷ = f(net) = <span class="fh">1</span>  if net ≥ <span class="fn">θ</span> (threshold)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fh">0</span>  if net &lt; <span class="fn">θ</span>
+  </div>
+
+  <div class="formula">
+    <span class="lbl">Step 3: Perceptron Learning Rule (Weight Update)</span>
+    <span class="fh">wᵢ(new)</span> = wᵢ(old) + <span class="fn">η</span> · (y − ŷ) · xᵢ<br><br>
+    <span class="fc">Where:</span><br>
+    <span class="fn">η</span> = learning rate (small positive number like 0.1)<br>
+    y  = true/desired output<br>
+    ŷ  = predicted output<br>
+    (y − ŷ) = error signal (0 if correct, ±1 if wrong)<br><br>
+    <span class="fc">If prediction is correct: (y−ŷ)=0 → weights don't change</span><br>
+    <span class="fc">If prediction is wrong: weights shift toward correct answer</span>
+  </div>
+
+  <h3>Perceptron Learning Algorithm</h3>
+  <div class="pcode">
+<span class="pk">Initialize:</span> weights W = random small values, bias b = 0<br>
+<br>
+<span class="pk">Repeat</span> until convergence:<br>
+&nbsp;&nbsp;<span class="pk">For</span> each training example (x, y):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;net = <span class="pf">Σ</span>(wᵢ·xᵢ) + b<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ŷ = <span class="pf">step</span>(net)  <span class="pc">← 1 if net≥0, else 0</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;error = y − ŷ<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pk">if</span> error ≠ 0:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wᵢ ← wᵢ + <span class="pd">η</span>·error·xᵢ  <span class="pk">for</span> all i<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b  ← b  + <span class="pd">η</span>·error
+  </div>
+
+  <div class="callout c-danger">
+    <strong>❗ Limitation of Perceptron</strong>
+    Perceptron can ONLY classify linearly separable data (data that can be separated by a straight line). It CANNOT solve the XOR problem. This limitation led to the invention of Multi-Layer Perceptron (MLP) with hidden layers.
+  </div>
+</section>
+
+<!-- ==================== Q11 ==================== -->
+<section id="q11">
+  <div class="ch">
+    <div class="ch-icon ci-purple">📡</div>
+    <div class="ch-meta">
+      <h2>Q11 — ADALINE Model</h2>
+      <p>"Explain ADALINE model" — Adaptive Linear Neuron by Widrow &amp; Hoff (1960)</p>
+    </div>
+  </div>
+
+  <div class="callout c-note">
+    <strong>📝 ADALINE vs Perceptron — The Key Difference</strong>
+    Perceptron: applies threshold BEFORE learning (compares output ŷ with target). ADALINE: applies threshold AFTER learning (compares raw net input with target). ADALINE uses a continuous output for training, making its learning rule (LMS/Widrow-Hoff) smoother and more stable.
+  </div>
+
+  <div class="card card-purple">
+    <h4>ADALINE Architecture</h4>
+    <p>Similar to Perceptron in structure, but the <strong>learning uses the linear output</strong> (before the threshold), not the binary output.</p>
+    <div class="formula">
+      <span class="lbl">ADALINE — Forward Pass</span>
+      net = Σᵢ <span class="fv">wᵢ·xᵢ</span> + <span class="fn">b</span>  <span class="fc">← same as perceptron</span><br><br>
+      <span class="fc">Training output (continuous):</span>  <span class="fh">o = net</span>  (used for weight update)<br>
+      <span class="fc">Prediction output (binary):</span>     ŷ = sign(net)  = +1 if net≥0, −1 if net&lt;0
+    </div>
+  </div>
+
+  <h3>LMS Learning Rule (Widrow-Hoff Rule)</h3>
+  <div class="formula">
+    <span class="lbl">LMS (Least Mean Squares) — Weight Update</span>
+    Error = <span class="fh">e = y − net</span>  <span class="fc">← uses net (linear output), NOT ŷ (binary output)</span><br><br>
+    <span class="fc">Cost function (Mean Square Error):</span><br>
+    E(W) = (1/2) · (y − net)² = (1/2) · e²<br><br>
+    <span class="fc">Weight update (gradient descent on E):</span><br>
+    <span class="fh">wᵢ(new)</span> = wᵢ(old) + <span class="fn">η</span> · (y − net) · xᵢ<br>
+    <span class="fh">b(new)</span>  = b(old)  + <span class="fn">η</span> · (y − net)<br><br>
+    <span class="fc">η = learning rate (step size for gradient descent)</span>
+  </div>
+
+  <table class="tbl">
+    <tr><th>Feature</th><th>Perceptron</th><th>ADALINE</th></tr>
+    <tr><td>Error signal</td><td>(y − ŷ) — uses binary output</td><td>(y − net) — uses continuous output</td></tr>
+    <tr><td>Learning rule</td><td>Perceptron learning rule</td><td>LMS / Widrow-Hoff rule</td></tr>
+    <tr><td>Activation</td><td>Step function (for learning too)</td><td>Linear for learning, sign for output</td></tr>
+    <tr><td>Convergence</td><td>Converges if linearly separable</td><td>Minimizes MSE — more stable</td></tr>
+    <tr><td>Training targets</td><td>Binary {0,1} or {-1,+1}</td><td>Continuous values (better gradient)</td></tr>
+  </table>
+
+  <div class="callout c-tip">
+    <strong>💡 Why ADALINE Matters</strong>
+    ADALINE introduced the concept of minimizing a continuous cost function using gradient descent. This exact idea — gradient descent on a loss function — is the foundation of how ALL modern neural networks learn, including deep learning.
+  </div>
+</section>
+
+<!-- ==================== Q12 ==================== -->
+<section id="q12">
+  <div class="ch">
+    <div class="ch-icon ci-teal">🏗️</div>
+    <div class="ch-meta">
+      <h2>Q12 — Hidden Layers &amp; Activation Functions</h2>
+      <p>"What is the importance of hidden layers and activation function? Justify with mathematical equation."</p>
+    </div>
+  </div>
+
+  <h3>Why Hidden Layers? <span class="badge b-red">Important</span></h3>
+
+  <div class="callout c-analogy">
+    <strong>🟠 Analogy — Building from Simple to Complex</strong>
+    A single detective can identify a suspect from one clue. But a team of detectives, each specializing in different clues (fingerprints, alibis, witnesses), can solve much harder cases by combining their findings. Hidden layers = teams of specialists, each layer extracting higher-level patterns.
+  </div>
+
+  <div class="card card-teal">
+    <h4>The Problem Without Hidden Layers</h4>
+    <p>A single-layer network (Perceptron) can only create <strong>linear decision boundaries</strong> — straight lines. Real-world data is almost never linearly separable.</p>
+    <div class="formula">
+      <span class="lbl">XOR Problem — Cannot be solved without hidden layers</span>
+      x₁=0, x₂=0 → output=0<br>
+      x₁=0, x₂=1 → output=1<br>
+      x₁=1, x₂=0 → output=1<br>
+      x₁=1, x₂=1 → output=0<br><br>
+      <span class="fc">No single straight line can separate the 0s from 1s → Perceptron fails completely</span><br>
+      <span class="fc">With one hidden layer: solved! Hidden neurons create non-linear combinations.</span>
+    </div>
+    <h4>The Solution: Hidden Layers</h4>
+    <p>Hidden layers allow the network to learn <strong>hierarchical non-linear representations</strong>:</p>
+    <ul>
+      <li>Layer 1: Detects edges and simple patterns</li>
+      <li>Layer 2: Combines edges into shapes</li>
+      <li>Layer 3: Combines shapes into objects (e.g., "face")</li>
+    </ul>
+    <p><strong>Universal Approximation Theorem:</strong> A neural network with at least one hidden layer and a non-linear activation function can approximate ANY continuous function to any desired accuracy.</p>
+  </div>
+
+  <h3>Activation Functions — Why Non-Linearity Matters</h3>
+
+  <div class="callout c-warn">
+    <strong>⚠ Critical Insight</strong>
+    If all neurons used linear activations, the entire deep network would collapse to a single linear function no matter how many layers you add: W₃(W₂(W₁x)) = W_total·x. You'd get nothing from depth! Non-linear activation functions are what makes deep learning "deep."
+  </div>
+
+  <div class="formula">
+    <span class="lbl">Without activation (linear): depth is useless</span>
+    Layer 1: h₁ = W₁·x<br>
+    Layer 2: h₂ = W₂·h₁ = W₂·W₁·x = W_combined·x  <span class="fc">← just one linear layer!</span>
+  </div>
+
+  <div class="g2">
+    <div class="formula">
+      <span class="lbl">1. Sigmoid / Logistic</span>
+      σ(z) = <span class="fh">1 / (1 + e⁻ᶻ)</span><br><br>
+      Range: (0, 1)<br>
+      <span class="fc">Use: Output layer for binary classification</span><br>
+      <span class="fc">Problem: Vanishing gradient for large |z|</span>
+    </div>
+    <div class="formula">
+      <span class="lbl">2. Tanh (Hyperbolic Tangent)</span>
+      tanh(z) = <span class="fh">(eᶻ − e⁻ᶻ) / (eᶻ + e⁻ᶻ)</span><br><br>
+      Range: (−1, +1)<br>
+      <span class="fc">Use: Hidden layers (better than sigmoid)</span><br>
+      <span class="fc">Zero-centered — better gradients</span>
+    </div>
+    <div class="formula">
+      <span class="lbl">3. ReLU (Rectified Linear Unit)</span>
+      ReLU(z) = <span class="fh">max(0, z)</span><br><br>
+      Range: [0, ∞)<br>
+      <span class="fc">Use: Most common hidden layer activation</span><br>
+      <span class="fc">Fast, no vanishing gradient for z>0</span>
+    </div>
+    <div class="formula">
+      <span class="lbl">4. Softmax (Output Layer, Multi-class)</span>
+      σ(zᵢ) = <span class="fh">eᶻⁱ / Σⱼ eᶻʲ</span><br><br>
+      Range: (0,1), sum=1<br>
+      <span class="fc">Use: Multi-class classification output</span><br>
+      <span class="fc">Converts scores to probabilities</span>
+    </div>
+  </div>
+
+  <div class="card card-purple">
+    <h4>Complete Forward Pass — Multi-Layer Network</h4>
+    <div class="formula">
+      <span class="lbl">Layer 1 (Hidden)</span>
+      z¹ = W¹·x + b¹  <span class="fc">← linear transformation</span><br>
+      a¹ = <span class="fh">ReLU(z¹)</span>   <span class="fc">← non-linear activation</span><br><br>
+      <span class="lbl">Layer 2 (Hidden)</span>
+      z² = W²·a¹ + b²<br>
+      a² = <span class="fh">ReLU(z²)</span><br><br>
+      <span class="lbl">Layer 3 (Output)</span>
+      z³ = W³·a² + b³<br>
+      ŷ  = <span class="fh">Softmax(z³)</span>  <span class="fc">← final prediction (probabilities)</span>
+    </div>
+    <p>Without the non-linear activations (ReLU, Sigmoid), all three layers would collapse into one linear operation → no benefit from depth.</p>
+  </div>
+</section>
+
+<!-- ==================== SOLVED PROBLEMS ==================== -->
+<section id="solved">
+  <div class="ch">
+    <div class="ch-icon ci-green">✅</div>
+    <div class="ch-meta">
+      <h2>Fully Solved Past Paper Problems</h2>
+      <p>Your actual exam questions — worked out step by step</p>
+    </div>
+  </div>
+
+  <!-- PROBLEM 1 -->
+  <div class="problem">
+    <div class="problem-header">
+      <span class="prob-num">Q4 — 10 MARKS</span>
+      <h4>Rover problem: States S1–S6. S1 has reward 100, S6 has reward 40. Middle states have reward 0. γ=0.5. Calculate return from ALL states using cumulative reward function. Form optimum policy.</h4>
+    </div>
+    <div class="problem-body">
+      <div class="state-row">
+        <div class="sbox sbox-tl"><span>S1</span><small>R=100</small></div>
+        <div class="sdash">—</div>
+        <div class="sbox sbox-n"><span>S2</span><small>R=0</small></div>
+        <div class="sdash">—</div>
+        <div class="sbox sbox-n"><span>S3</span><small>R=0</small></div>
+        <div class="sdash">—</div>
+        <div class="sbox sbox-n"><span>S4</span><small>R=0</small></div>
+        <div class="sdash">—</div>
+        <div class="sbox sbox-n"><span>S5</span><small>R=0</small></div>
+        <div class="sdash">—</div>
+        <div class="sbox sbox-tr"><span>S6</span><small>R=40</small></div>
+      </div>
+
+      <span class="solution-label">— STEP-BY-STEP SOLUTION —</span>
+
+      <p><strong>Formula used:</strong> G_t = R_{t+1} + γ·G_{t+1} (recursive return)</p>
+      <p><strong>Terminal states:</strong> G(S1)=100, G(S6)=40 (no more steps possible)</p>
+
+      <div class="formula">
+        <span class="lbl">Going LEFT toward S1 (reward=100)</span>
+        G(S2→S1) = 0 + 0.5×100 = <span class="fh">50.0</span><br>
+        G(S3→S2→S1) = 0 + 0.5×0 + (0.5²)×100 = 0.25×100 = <span class="fh">25.0</span><br>
+        G(S4→...→S1) = (0.5³)×100 = 0.125×100 = <span class="fh">12.5</span><br>
+        G(S5→...→S1) = (0.5⁴)×100 = 0.0625×100 = <span class="fh">6.25</span>
+      </div>
+
+      <div class="formula">
+        <span class="lbl">Going RIGHT toward S6 (reward=40)</span>
+        G(S5→S6) = 0 + 0.5×40 = <span class="fh">20.0</span><br>
+        G(S4→S5→S6) = 0 + 0.5×0 + (0.5²)×40 = 0.25×40 = <span class="fh">10.0</span><br>
+        G(S3→...→S6) = (0.5³)×40 = 0.125×40 = <span class="fh">5.0</span><br>
+        G(S2→...→S6) = (0.5⁴)×40 = 0.0625×40 = <span class="fh">2.5</span>
+      </div>
+
+      <table class="tbl" style="margin-top:14px;">
+        <tr><th>State</th><th>Return if LEFT (→S1)</th><th>Return if RIGHT (→S6)</th><th>Best Action</th></tr>
+        <tr><td>S2</td><td style="color:var(--green);font-weight:700;">50.0</td><td>2.5</td><td style="color:var(--green);">← GO LEFT</td></tr>
+        <tr><td>S3</td><td style="color:var(--green);font-weight:700;">25.0</td><td>5.0</td><td style="color:var(--green);">← GO LEFT</td></tr>
+        <tr><td>S4</td><td style="color:var(--green);font-weight:700;">12.5</td><td>10.0</td><td style="color:var(--green);">← GO LEFT (barely!)</td></tr>
+        <tr><td>S5</td><td>6.25</td><td style="color:var(--yellow);font-weight:700;">20.0</td><td style="color:var(--yellow);">GO RIGHT →</td></tr>
+      </table>
+
+      <div class="answer-box">
+        <strong style="color:var(--green);">✓ Optimal Policy:</strong> S2, S3, S4 → move LEFT (toward reward 100) &nbsp;|&nbsp; S5 → move RIGHT (toward reward 40).<br><br>
+        <strong>Key Insight:</strong> Even though 100 is larger, the discount factor (γ=0.5) makes far-away rewards shrink. At S4 it's close: LEFT=12.5 vs RIGHT=10. At S5 the tide turns because S6 is only 1 step away (20) while S1 is 4 steps away (6.25).
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM 2 -->
+  <div class="problem">
+    <div class="problem-header">
+      <span class="prob-num">Q5 — 10 MARKS</span>
+      <h4>An agent using Q-learning always selects the highest Q-value and never explores. Explain how this affects exploration, exploitation, and convergence. Will it converge to optimal policy? Justify.</h4>
+    </div>
+    <div class="problem-body">
+      <span class="solution-label">— COMPLETE ANALYSIS —</span>
+
+      <p><strong>What the agent is doing:</strong> Pure greedy policy — always picks a = argmax Q(s,a). No randomness. ε = 0.</p>
+
+      <div class="steps">
+        <div class="step"><div class="snum sn-blue">1</div><div class="scontent">
+          <strong>Effect on Exploration: Zero</strong>
+          <p>The agent ONLY visits state-action pairs that appear best from its current Q-values (which start at 0 or random). Most (s,a) pairs are never visited. Their Q-values stay wrong forever — initialized values, never corrected.</p>
+        </div></div>
+        <div class="step"><div class="snum sn-blue">2</div><div class="scontent">
+          <strong>Effect on Exploitation: Full but Blind</strong>
+          <p>The agent exploits 100% of the time — but it's exploiting based on INCOMPLETE knowledge. Like always eating at the first restaurant you ever visited, never trying others, and insisting it's the best in the city.</p>
+        </div></div>
+        <div class="step"><div class="snum sn-blue">3</div><div class="scontent">
+          <strong>Effect on Convergence</strong>
+          <div class="formula">
+            Q-learning convergence requires ALL 3 conditions:<br>
+            Condition 1: All (s,a) pairs visited infinitely often  → <span class="fr">❌ VIOLATED (ε=0 means no exploration)</span><br>
+            Condition 2: Learning rate α decays: Σα=∞, Σα²&lt;∞  → may be met<br>
+            Condition 3: Bounded rewards                          → may be met<br><br>
+            Condition 1 violated → <span class="fr">NO convergence guarantee to Q*</span>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="answer-box">
+        <strong style="color:var(--red);">✗ No — The agent will NOT converge to the optimal policy.</strong><br><br>
+        The agent gets stuck in a suboptimal local policy based on its initial (biased/random) Q-values. States that were never visited have permanently incorrect Q-values, so the "best known" action is often not the globally best action.<br><br>
+        <strong>Fix:</strong> Use ε-greedy with ε&gt;0 (e.g. ε=0.1). Gradually decay ε as learning progresses: start high (explore a lot) → reduce over time (exploit more). GLIE (Greedy in the Limit with Infinite Exploration): ε→0 as t→∞, but Σεₜ=∞.
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM 3 -->
+  <div class="problem">
+    <div class="problem-header">
+      <span class="prob-num">Q3 — 10 MARKS</span>
+      <h4>MDP with states A, B, C, discount γ=0.5. Actions: ab, ba, bc, ca, cb. Rewards: ab=−8, ba=+2, bc=−2, ca=+4, cb=+8. Probabilities shown. (I) Define V^π(s). (II) Write Bellman expectation equation.</h4>
+    </div>
+    <div class="problem-body">
+      <span class="solution-label">— SOLUTION —</span>
+
+      <div class="mdp-graph">
+        <div class="mdp-states-row">
+          <div class="mdp-state">A</div>
+          <div style="font-size:13px;color:var(--text-dim);">
+            ←+2 ba<br>
+            ab −8→
+          </div>
+          <div class="mdp-state">B</div>
+        </div>
+        <div style="font-size:13px;color:var(--text-dim);margin:8px 0;">
+          ca +4 (prob 3/4) from C→A &nbsp;|&nbsp; cb +8 from C→B &nbsp;|&nbsp; bc −2 from B→C &nbsp;|&nbsp; also +2 at top (A to B path)
+        </div>
+        <div class="mdp-state" style="margin:0 auto;">C</div>
+      </div>
+
+      <p><strong>Part I — Define V^π(s):</strong></p>
+      <div class="formula">
+        V<sup>π</sup>(s) = E<sub>π</sub>[G<sub>t</sub> | S<sub>t</sub> = s]<br><br>
+        = E<sub>π</sub>[ R<sub>t+1</sub> + γ·R<sub>t+2</sub> + γ²·R<sub>t+3</sub> + ... | S<sub>t</sub>=s ]<br><br>
+        = E<sub>π</sub>[ Σ<sub>k=0</sub><sup>∞</sup> γ<sup>k</sup>·R<sub>t+k+1</sub> | S<sub>t</sub>=s ]
+      </div>
+      <p style="font-size:13px;">The state-value function for a discounted MDP is the expected sum of all future rewards starting from state s, where reward k steps ahead is discounted by γ^k, following policy π.</p>
+
+      <p><strong>Part II — Bellman Expectation Equation:</strong></p>
+      <div class="formula">
+        <span class="lbl">General Form</span>
+        V<sup>π</sup>(s) = Σ<sub>a</sub> π(a|s) · Σ<sub>s'</sub> P(s'|s,a) · [R(s,a,s') + γ·V<sup>π</sup>(s')]<br><br>
+        <span class="lbl">Applied to State A (only action: ab → goes to B, reward=−8)</span>
+        V<sup>π</sup>(A) = 1·[−8 + 0.5·V<sup>π</sup>(B)]<br>
+        V<sup>π</sup>(A) = −8 + 0.5·V<sup>π</sup>(B)<br><br>
+        <span class="lbl">Applied to State B (actions: ba and bc, with policy probabilities)</span>
+        V<sup>π</sup>(B) = π(ba|B)·[+2 + 0.5·V<sup>π</sup>(A)] + π(bc|B)·[−2 + 0.5·V<sup>π</sup>(C)]<br><br>
+        <span class="lbl">Applied to State C (actions: ca with prob 3/4, cb)</span>
+        V<sup>π</sup>(C) = (3/4)·[+4 + 0.5·V<sup>π</sup>(A)] + (1/4)·[+8 + 0.5·V<sup>π</sup>(B)]<br>
+        V<sup>π</sup>(C) = 3 + 0.375·V<sup>π</sup>(A) + 2 + 0.125·V<sup>π</sup>(B)<br>
+        V<sup>π</sup>(C) = 5 + 0.375·V<sup>π</sup>(A) + 0.125·V<sup>π</sup>(B)
+      </div>
+
+      <div class="answer-box">
+        <strong style="color:var(--green);">✓ To find actual values:</strong> You now have 3 equations with 3 unknowns (V(A), V(B), V(C)). Substitute and solve simultaneously using linear algebra. The Bellman equation converts the RL problem into a solvable linear system.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+</div>
+<div style="background:var(--surface);border-top:1px solid var(--border);padding:18px 32px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);">
+  RRL Complete Guide · Q1–Q12 · MDP · Bellman · Q-Learning · SARSA · Neural Networks · All Topics Covered
+</div>
+
+</body>
+</html>
