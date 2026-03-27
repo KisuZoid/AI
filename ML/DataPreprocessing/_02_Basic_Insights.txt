@@ -1,0 +1,13 @@
+Basic Insights From Dataset
+
+# Method 1: dtypes
+Data has variety of types. 
+The main types stored in pandas are: object, float, int, bool and datetime64.
+
+df.dtypes -> gives the data type of each column in the dataset.
+
+# Method 2: Describe
+df.describe() -> gives the statistical summary of the dataset. It includes count, mean, standard deviation, minimum, 25th percentile, 50th percentile (median), 75th percentile and maximum values for each numerical column in the dataset.
+
+# Method 3: Info
+df.info() -> gives a concise summary of the DataFrame. It includes the number of non-null entries, data types of each column, and memory usage of the DataFrame. This method is useful for quickly assessing the structure and completeness of the dataset.
