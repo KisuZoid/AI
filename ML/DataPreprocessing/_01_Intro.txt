@@ -1,9 +1,0 @@
-Syllabus
-1. Importing Dataset and How to get Basic insights from it.
-2. Handling Missing Values.
-3. How to deal with missing values in scikit-learn.
-4. Data formatting and Data Binning
-5. How to Handle Categorical Data.
-6. Train and Test Split 
-7. Feature Scaling and Normalization. 
-
