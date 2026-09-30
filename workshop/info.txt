@@ -1,0 +1,4 @@
+https://drive.google.com/drive/folders/1l_hJmxq7mD1oP5IXoDnlI3OdkiAk4DZb -> drive
+https://docs.google.com/presentation/d/1GvIoTu23xfo0TeijCH-bE8iMlXYYYLkVNbTIUzFrAaM/edit?slide=id.p#slide=id.p -> deck
+https://huggingface.co/JustinAngel/workshop-v1-pretraining/tree/main -> HF
+
